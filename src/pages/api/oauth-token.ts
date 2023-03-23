@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 import { petFinderKey, petFinderSecret } from '../../../api-keys'
+
 export default async function egg(req, res) {
   const params = new URLSearchParams()
   params.append('grant_type', 'client_credentials')

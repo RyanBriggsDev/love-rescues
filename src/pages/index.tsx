@@ -1,6 +1,9 @@
 // @ts-nocheck
 import { useEffect, useState, useContext } from 'react'
 import { AuthContext } from './_app'
+import Image from 'next/image'
+import dogPlaceholder from '../assets/images/dogPlaceholder.jpg'
+import { FullPageGrid } from '@/components/Grids'
 
 export default function Index() {
   const [results, setResults] = useState<any>()
@@ -9,14 +12,11 @@ export default function Index() {
   useEffect(() => {
     if (accessToken === null) return
     const fetchData = async () => {
-      const res = await fetch(
-        'https://api.petfinder.com/v2/animals?animal=dog',
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
+      const res = await fetch('https://api.petfinder.com/v2/animals?type=dog', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       const json = await res.json()
       console.log(json)
       if (json.animals) {
@@ -31,10 +31,26 @@ export default function Index() {
 
   if (!loading && results.animals)
     return (
-      <>
+      <FullPageGrid>
         {results.animals.map((animal: any, index: number) => (
-          <div key={index}>{animal.name}</div>
+          <div key={index}>
+            {
+              <Image
+                src={
+                  animal.photos[0] ? animal.photos[0].medium : dogPlaceholder
+                }
+                width={250}
+                height={250}
+                alt={`A picture of a ${
+                  animal.breeds ? animal.breeds.primary : 'dog'
+                } called ${animal.name ? animal.name : 'Doug'}`}
+              />
+            }
+            <h3>
+              {animal.name} is a {animal.breeds.primary}
+            </h3>
+          </div>
         ))}
-      </>
+      </FullPageGrid>
     )
 }
