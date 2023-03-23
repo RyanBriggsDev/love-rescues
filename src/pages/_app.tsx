@@ -1,6 +1,7 @@
 // @ts-nocheck
 import '../styles/global.css'
 import { useEffect, createContext, useState } from 'react'
+import Layout from '@/components/Layout'
 
 export const AuthContext = createContext()
 
@@ -18,7 +19,9 @@ function MyApp({ Component, pageProps }: any) {
 
   return (
     <AuthContext.Provider value={accessToken}>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </AuthContext.Provider>
   )
 }
