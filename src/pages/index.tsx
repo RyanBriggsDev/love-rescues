@@ -27,7 +27,7 @@ export default function Index() {
     fetchData()
   }, [accessToken])
 
-  if (loading) return <h1>Loading...</h1>
+  if (loading) return <h1 className="text-red-500">Loading...</h1>
 
   if (!loading && results.animals)
     return (
