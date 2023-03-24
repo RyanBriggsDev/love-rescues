@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: goodpaw;
+  src: url(../assets/fonts/goodPaw.ttf);
+}
+
+@font-face {
+  font-family: poppins;
+  src: url(../assets/fonts/PoppinsRegular.ttf);
+}
+
+.goodpaw {
+  font-family: goodpaw;
+}
+
+.font-poppins {
+  font-family: poppins;
+}

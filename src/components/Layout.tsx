@@ -4,7 +4,7 @@ export default function Layout(props: LayoutProps) {
   return (
     <div
       id="layout"
-      className="flex min-h-screen flex-col items-center justify-between px-1 md:px-3"
+      className="flex min-h-screen flex-col items-center justify-between  bg-gray-100 font-poppins"
     >
       <nav>nav</nav>
       <PageSpacing>{props.children}</PageSpacing>
@@ -21,7 +21,7 @@ function PageSpacing(props: PageSpacingProps) {
   return (
     <div
       id="page-spacing"
-      className="flex w-full flex-auto flex-col gap-3 py-3 md:gap-6"
+      className="flex w-full flex-auto flex-col gap-3 md:gap-6 lg:gap-9"
     >
       {props.children}
     </div>
