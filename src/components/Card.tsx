@@ -1,10 +1,8 @@
-import { ReactElement } from 'react'
-
 export default function Card(props: CardProps) {
   return (
     <div
       id="card"
-      className={`w-full h-[250px] bg-white rounded ${
+      className={`w-full mh-[250px] bg-white rounded shadow ${
         props.className ? props.className : ''
       }`}
       style={props.style}
@@ -15,7 +13,7 @@ export default function Card(props: CardProps) {
 }
 
 type CardProps = {
-  children: ReactElement
-  style: any
-  className: string
+  children: any
+  style?: any
+  className?: string
 }
