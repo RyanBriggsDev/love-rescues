@@ -5,7 +5,6 @@ import Image from 'next/image'
 import dogPlaceholder from '../assets/images/dogPlaceholder.jpg'
 import { FullPageGrid, TwoColGrid } from '@/components/Grids'
 import Container from '@/components/Container'
-// import introCopy from '../assets/data/copy.json'
 import { Introduction } from '@/components/Home'
 import Card from '@/components/Card'
 import { useRouter } from 'next/router'
@@ -88,14 +87,6 @@ export default function Index() {
                       </h3>
                     </div>
                   </div>
-
-                  {/* {<Image
-                    src={animal.photos[0]
-                      ? animal.photos[0].medium
-                      : dogPlaceholder}
-                    width={250}
-                    height={250}
-                    alt={`A picture of a ${animal.breeds ? animal.breeds.primary : 'dog'} called ${animal.name ? animal.name : 'Doug'}`} />} */}
                 </Card>
               )
             })}
