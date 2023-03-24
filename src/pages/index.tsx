@@ -57,7 +57,6 @@ export default function Index() {
         </div>
 
         <div className="flex flex-col items-center justify-center bg-white">
-          {/* filter here */}
           <SearchFilter />
           <FullPageGrid>
             {results.animals.map((animal: any, index: number) => {
