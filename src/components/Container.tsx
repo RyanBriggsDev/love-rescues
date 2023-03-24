@@ -1,5 +1,3 @@
-import { ReactElement } from 'react'
-
 export default function Container(props: ContainerProps) {
   return (
     <div
@@ -14,7 +12,7 @@ export default function Container(props: ContainerProps) {
 }
 
 type ContainerProps = {
-  children: ReactElement
+  children: any
   className?: string
   padding?: string
 }

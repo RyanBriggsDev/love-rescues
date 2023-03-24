@@ -1,9 +1,8 @@
 // @ts-nocheck
 import { useEffect, useState, useContext } from 'react'
 import { AuthContext } from './_app'
-import Image from 'next/image'
 import dogPlaceholder from '../assets/images/dogPlaceholder.jpg'
-import { FullPageGrid, TwoColGrid } from '@/components/Grids'
+import { FullPageGrid } from '@/components/Grids'
 import Container from '@/components/Container'
 import { Introduction } from '@/components/Home'
 import Card from '@/components/Card'
@@ -99,7 +98,7 @@ export default function Index() {
 const SearchFilter = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center p-1 md:p-3">
-      <p className="p-3 text-center">// Not currently implemented</p>
+      <p className="p-3 text-center"> Not currently implemented</p>
       <div className="w-full bg-blue-800 rounded flex justify-center items-center">
         <Container
           padding="p-3"
