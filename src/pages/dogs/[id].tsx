@@ -4,6 +4,7 @@ import { AuthContext } from '../_app'
 import { SixGrid } from '@/components/Grids'
 import Container from '@/components/Container'
 import Card from '@/components/Card'
+import { capitalise } from '@/lib/utils'
 
 export default function SingleDog() {
   const router = useRouter()
@@ -33,7 +34,6 @@ export default function SingleDog() {
   if (!loading && results)
     return (
       <>
-        {/* images */}
         {results.photos.length === 0 ? (
           <p>No photos</p>
         ) : (
@@ -46,24 +46,26 @@ export default function SingleDog() {
 
 const SingleDogImages = (props: any) => {
   return (
-    <div className="w-full grid grid-cols-3">
+    <>
       {props.results.photos.length === 1 && (
-        <SingleDogImage src={props.results.photos[0].large} />
+        <div className="w-full grid grid-cols-1 gap-1">
+          <SingleDogImage src={props.results.photos[0].large} />
+        </div>
       )}
       {props.results.photos.length === 2 && (
-        <>
+        <div className="w-full grid grid-cols-2 gap-1">
           <SingleDogImage src={props.results.photos[0].large} />
           <SingleDogImage src={props.results.photos[1].large} />
-        </>
+        </div>
       )}
       {props.results.photos.length >= 3 && (
-        <>
+        <div className="w-full grid grid-cols-3 gap-1">
           <SingleDogImage src={props.results.photos[0].large} />
           <SingleDogImage src={props.results.photos[1].large} />
           <SingleDogImage src={props.results.photos[2].large} />
-        </>
+        </div>
       )}
-    </div>
+    </>
   )
 }
 
@@ -104,8 +106,9 @@ const DogInfo = (props: any) => {
 
       <div className="flex gap-3">
         <p>{`${props.results.breeds.primary}${
-          props.results.breeds.secondary &&
-          ` & ${props.results.breeds.secondary} Cross`
+          props.results.breeds.secondary
+            ? ` & ${props.results.breeds.secondary}`
+            : ''
         }`}</p>
       </div>
       <hr />
@@ -151,7 +154,7 @@ const DogInfo = (props: any) => {
             </div>
           </div>
           <div>
-            <h4>GOOD IN A HOME WITH</h4>
+            <h4 className="text-xl">GOOD IN A HOME WITH</h4>
             <div className="flex gap-3 items-center">
               {props.results.environment.dogs && <p>Dogs</p>}
               {props.results.environment.children && <p>Children</p>}
@@ -165,6 +168,15 @@ const DogInfo = (props: any) => {
           </div>
         </div>
       </div>
+      {props.results.description && (
+        <>
+          <hr />
+          <div>
+            <h3 className="text-3xl">{`Meet ${props.results.name}`}</h3>
+            <p>{props.results.description}</p>
+          </div>
+        </>
+      )}
     </Card>
   )
 }
