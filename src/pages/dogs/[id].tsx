@@ -4,6 +4,7 @@ import { AuthContext } from '../_app'
 import { SixGrid } from '@/components/Grids'
 import Container from '@/components/Container'
 import Card from '@/components/Card'
+import Button from '@/components/Button'
 import { capitalise } from '@/lib/utils'
 
 export default function SingleDog() {
@@ -84,7 +85,7 @@ const MainContent = (props: any) => {
       <Container>
         <SixGrid>
           <DogInfo results={props.results} />
-          <Sidebar />
+          <Sidebar results={props.results} />
         </SixGrid>
       </Container>
     </div>
@@ -181,6 +182,48 @@ const DogInfo = (props: any) => {
   )
 }
 
-const Sidebar = () => {
-  return <div className="col-span-2">Sidebar</div>
+const Sidebar = (props: any) => {
+  return (
+    <div className="col-span-2">
+      <PurpleCard results={props.results} />
+    </div>
+  )
+}
+
+const PurpleCard = (props: any) => {
+  return (
+    <Card bg="bg-violet-700 p-3 md:p-6 text-white text-center flex flex-col gap-3">
+      <h3 className="text-2xl">{`Considering ${props.results.name} for adoption?`}</h3>
+      <Button
+        color="text-violet-700 hover:text-white"
+        className="hover:bg-violet-900"
+        onClick={() => console.log('egg')}
+      >
+        Start Your Inquiry
+      </Button>
+      <Button
+        color="text-white"
+        className="border-white bg-transparent border-2 hover:border-violet-900 hover:bg-violet-900"
+        onClick={() => console.log('egg')}
+      >
+        Read FAQs
+      </Button>
+      <div className="grid grid-cols-2 gap-3">
+        <Button
+          className="w-100 bg-transparent hover:bg-violet-900"
+          color="text-white"
+          onClick={() => console.log('egg')}
+        >
+          Sponsor
+        </Button>
+        <Button
+          className="w-100 bg-transparent hover:bg-violet-900"
+          color="text-white"
+          onClick={() => console.log('egg')}
+        >
+          Favourite
+        </Button>
+      </div>
+    </Card>
+  )
 }
