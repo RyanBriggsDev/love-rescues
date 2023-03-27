@@ -5,7 +5,10 @@ import { SixGrid } from '@/components/Grids'
 import Container from '@/components/Container'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
-import { capitalise } from '@/lib/utils'
+import Icon from '@/components/Icon'
+import { BiMailSend, BiMapPin, BiPhone } from 'react-icons/bi'
+import Image from 'next/image'
+import rescueCoLogo from '../../assets/images/rescueCoLogo.png'
 
 export default function SingleDog() {
   const router = useRouter()
@@ -94,8 +97,8 @@ const MainContent = (props: any) => {
 
 const DogInfo = (props: any) => {
   return (
-    <Card className="col-span-4 p-3 md:p-6 flex flex-col gap-6">
-      <h1 className="text-4xl py-6">{`${
+    <Card className="col-span-6 md:col-span-4 p-3 md:p-6 flex flex-col gap-6 text-center sm:text-start">
+      <h1 className="text-4xl py-6 text-center sm:text-start">{`${
         props.results.name && props.results.name
       }${
         props.results.contact.address.city &&
@@ -105,7 +108,7 @@ const DogInfo = (props: any) => {
         `, ${props.results.contact.address.state}`
       }`}</h1>
 
-      <div className="flex gap-3">
+      <div className="flex gap-3 text-center sm:text-start justify-center md:justify-start">
         <p>{`${props.results.breeds.primary}${
           props.results.breeds.secondary
             ? ` & ${props.results.breeds.secondary}`
@@ -113,7 +116,7 @@ const DogInfo = (props: any) => {
         }`}</p>
       </div>
       <hr />
-      <ul className="flex [&>*]:mr-6">
+      <ul className="flex flex-wrap justify-center md:justify-start gap-3">
         {<li>{props.results.age ? props.results.age : 'Age Unknown'}</li>}
         {
           <li>
@@ -141,7 +144,7 @@ const DogInfo = (props: any) => {
           </div>
           <div>
             <h4 className="text-xl">HEALTH</h4>
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 items-center justify-center md:justify-start">
               {props.results.attributes.shots_current && (
                 <p>Vaccinations up to date</p>
               )}
@@ -156,7 +159,7 @@ const DogInfo = (props: any) => {
           </div>
           <div>
             <h4 className="text-xl">GOOD IN A HOME WITH</h4>
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 items-center justify-center md:justify-start">
               {props.results.environment.dogs && <p>Dogs</p>}
               {props.results.environment.children && <p>Children</p>}
               {props.results.environment.cats && <p>Cats</p>}
@@ -172,7 +175,7 @@ const DogInfo = (props: any) => {
       {props.results.description && (
         <>
           <hr />
-          <div>
+          <div className=" flex flex-col gap-1">
             <h3 className="text-3xl">{`Meet ${props.results.name}`}</h3>
             <p>{props.results.description}</p>
           </div>
@@ -184,15 +187,19 @@ const DogInfo = (props: any) => {
 
 const Sidebar = (props: any) => {
   return (
-    <div className="col-span-2">
+    <div className="col-span-6 md:col-span-2 flex flex-col gap-3 lg:gap-6 justify-around">
       <PurpleCard results={props.results} />
+      <RescuerCard results={props.results} />
     </div>
   )
 }
 
 const PurpleCard = (props: any) => {
   return (
-    <Card bg="bg-violet-700 p-3 md:p-6 text-white text-center flex flex-col gap-3">
+    <Card
+      bg="bg-violet-700"
+      className="p-3 md:p-6 text-white justify-center text-center flex flex-col gap-3"
+    >
       <h3 className="text-2xl">{`Considering ${props.results.name} for adoption?`}</h3>
       <Button
         color="text-violet-700 hover:text-white"
@@ -203,26 +210,87 @@ const PurpleCard = (props: any) => {
       </Button>
       <Button
         color="text-white"
-        className="border-white bg-transparent border-2 hover:border-violet-900 hover:bg-violet-900"
+        bg="bg-transparent hover:bg-violet-900"
+        className="border-white border-2 hover:border-violet-700"
         onClick={() => console.log('egg')}
       >
         Read FAQs
       </Button>
       <div className="grid grid-cols-2 gap-3">
         <Button
-          className="w-100 bg-transparent hover:bg-violet-900"
+          bg="bg-violet-700 hover:bg-violet-900"
+          className="w-100"
           color="text-white"
           onClick={() => console.log('egg')}
         >
           Sponsor
         </Button>
         <Button
-          className="w-100 bg-transparent hover:bg-violet-900"
+          bg="bg-violet-700 hover:bg-violet-900"
+          className="w-100"
           color="text-white"
           onClick={() => console.log('egg')}
         >
           Favourite
         </Button>
+      </div>
+    </Card>
+  )
+}
+
+const RescuerCard = (props: any) => {
+  return (
+    <Card className="p-3 md:p-6 text-center flex flex-col gap-3 justify-center relative">
+      <Image
+        src={rescueCoLogo}
+        className="absolute -top-12"
+        width={100}
+        height={100}
+        alt="rescuer logo image"
+      />
+      <h3 className="text-2xl my-12">Contact Info</h3>
+      <div
+        id="contact-info"
+        className="flex gap-6 flex-col text-base md:text-xs lg:text-base"
+      >
+        <div id="address" className="flex gap-3">
+          <Icon icon={<BiMapPin />} />
+          <div>
+            <ul className="text-left flex flex-col gap-1">
+              <li>{props.results.contact.address.address1}</li>
+              {props.results.contact.address.address2 && (
+                <li>{props.results.contact.address.address2}</li>
+              )}
+              <li>{`${props.results.contact.address.city}, ${props.results.contact.address.state} ${props.results.contact.address.postcode}`}</li>
+              {props.results.contact.phone && (
+                <li>{props.results.contact.phone}</li>
+              )}
+            </ul>
+          </div>
+        </div>
+        <hr />
+        {props.results.contact.email && (
+          <>
+            <div id="email" className="flex gap-3">
+              <Icon icon={<BiMailSend />} />
+              <a href={`mailto:${props.results.contact.email}`}>
+                {props.results.contact.email}
+              </a>
+            </div>
+            <hr />
+          </>
+        )}
+
+        {props.results.contact.phone && (
+          <>
+            <div id="phone" className="flex gap-3">
+              <Icon icon={<BiPhone />} />
+              <a href={`tel:${props.results.contact.phone}`}>
+                {props.results.contact.phone}
+              </a>
+            </div>
+          </>
+        )}
       </div>
     </Card>
   )

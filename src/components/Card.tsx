@@ -2,7 +2,7 @@ export default function Card(props: CardProps) {
   return (
     <div
       id="card"
-      className={`w-full min-h-[250px] rounded shadow 
+      className={`w-full rounded shadow 
       ${props.className ? props.className : ''}
       ${props.bg ? props.bg : 'bg-white'}
       `}
