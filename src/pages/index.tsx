@@ -59,7 +59,7 @@ export default function Index() {
           <FullPageGrid>
             {results.animals.map((animal: any, index: number) => {
               return (
-                <Card key={index} className="text-white rounded">
+                <Card key={index} className="text-white rounded min-h-[250px]">
                   <div
                     className="w-full h-full bg-cover bg-no-repeat bg-center rounded"
                     style={{
