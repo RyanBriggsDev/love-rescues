@@ -20,5 +20,5 @@ export function SixGrid(props: GridProps) {
 
 type GridProps = {
   children: any
-  gap: string
+  gap?: string
 }

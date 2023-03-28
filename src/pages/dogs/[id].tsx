@@ -14,6 +14,7 @@ export default function SingleDog() {
   const router = useRouter()
   const { id } = router.query
   const [results, setResults] = useState<any>()
+  const [org, setOrg] = useState<any>()
   const [loading, setLoading] = useState(true)
   const accessToken = useContext(AuthContext)
   useEffect(() => {
@@ -27,12 +28,29 @@ export default function SingleDog() {
       const json = await res.json()
       console.log(json)
       if (json.animal) {
-        setLoading(false)
         setResults(json.animal)
+        const orgId = json.animal._links.organization.href.split(/[/ ]+/).pop()
+        try {
+          const orgRes = await fetch(
+            `https://api.petfinder.com/v2/animals?organization=${orgId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          )
+          const orgJson = await orgRes.json()
+          console.log(orgJson)
+          if (orgJson.animals) {
+            setOrg(orgJson)
+          }
+        } catch (error) {
+          console.log(error)
+        }
       }
     }
     if (router.isReady) fetchData()
-  }, [accessToken])
+  }, [accessToken, id, router.isReady])
 
   if (loading) return <h1>Loading...</h1>
   if (!loading && results)
