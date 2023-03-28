@@ -43,6 +43,7 @@ export default function SingleDog() {
           console.log(orgJson)
           if (orgJson.animals) {
             setOrg(orgJson)
+            setLoading(false)
           }
         } catch (error) {
           console.log(error)
