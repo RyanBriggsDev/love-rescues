@@ -86,7 +86,7 @@ const MainContent = (props: any) => {
   return (
     <div className="flex items-center justify-center">
       <Container>
-        <SixGrid>
+        <SixGrid gap="gap-6">
           <DogInfo results={props.results} />
           <Sidebar results={props.results} />
         </SixGrid>
@@ -97,7 +97,7 @@ const MainContent = (props: any) => {
 
 const DogInfo = (props: any) => {
   return (
-    <Card className="col-span-6 md:col-span-4 p-3 md:p-6 flex flex-col gap-6 text-center sm:text-start">
+    <Card className="col-span-6 md:col-span-4 p-6 flex flex-col gap-6 text-center sm:text-start">
       <h1 className="text-4xl py-6 text-center sm:text-start">{`${
         props.results.name && props.results.name
       }${
@@ -187,7 +187,7 @@ const DogInfo = (props: any) => {
 
 const Sidebar = (props: any) => {
   return (
-    <div className="col-span-6 md:col-span-2 flex flex-col gap-3 lg:gap-6 justify-around">
+    <div className="col-span-6 md:col-span-2 flex flex-col gap-6 justify-around">
       <PurpleCard results={props.results} />
       <RescuerCard results={props.results} />
     </div>
@@ -198,7 +198,7 @@ const PurpleCard = (props: any) => {
   return (
     <Card
       bg="bg-violet-700"
-      className="p-3 md:p-6 text-white justify-center text-center flex flex-col gap-3"
+      className="p-6 text-white justify-center text-center flex flex-col gap-3"
     >
       <h3 className="text-2xl">{`Considering ${props.results.name} for adoption?`}</h3>
       <Button
@@ -240,15 +240,16 @@ const PurpleCard = (props: any) => {
 
 const RescuerCard = (props: any) => {
   return (
-    <Card className="p-3 md:p-6 text-center flex flex-col gap-3 justify-center relative">
-      <Image
-        src={rescueCoLogo}
-        className="absolute -top-12"
-        width={100}
-        height={100}
-        alt="rescuer logo image"
-      />
-      <h3 className="text-2xl my-12">Contact Info</h3>
+    <Card className="p-6 text-center flex flex-col gap-3 justify-center relative">
+      <div className="w-full flex justify-center">
+        <Image
+          src={rescueCoLogo}
+          width="100"
+          height={100}
+          alt="rescuer purple logo"
+        />
+      </div>
+      <h3 className="text-2xl mb-12">Contact Info</h3>
       <div
         id="contact-info"
         className="flex gap-6 flex-col text-base md:text-xs lg:text-base"

@@ -8,7 +8,11 @@ export function FullPageGrid(props: GridProps) {
 
 export function SixGrid(props: GridProps) {
   return (
-    <div className="grid grid-cols-6 gap-3 md:gap-3 lg:gap-6 w-full">
+    <div
+      className={`grid grid-cols-6 w-full ${
+        props.gap ? props.gap : 'gap-3 md:gap-3 lg:gap-6'
+      }`}
+    >
       {props.children}
     </div>
   )
@@ -16,4 +20,5 @@ export function SixGrid(props: GridProps) {
 
 type GridProps = {
   children: any
+  gap: string
 }
