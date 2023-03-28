@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useContext, useState, useEffect } from 'react'
 import { AuthContext } from '../_app'
-import { SixGrid } from '@/components/Grids'
+import { FourGrid, SixGrid } from '@/components/Grids'
 import Container from '@/components/Container'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
@@ -14,9 +14,12 @@ export default function SingleDog() {
   const router = useRouter()
   const { id } = router.query
   const [results, setResults] = useState<any>()
+  const [orgAnimals, setOrgAnimals] = useState<any>()
   const [org, setOrg] = useState<any>()
+  const [otherDogs, setOtherDogs] = useState<any>()
   const [loading, setLoading] = useState(true)
   const accessToken = useContext(AuthContext)
+
   useEffect(() => {
     if (accessToken === null) return
     const fetchData = async () => {
@@ -31,7 +34,7 @@ export default function SingleDog() {
         setResults(json.animal)
         const orgId = json.animal._links.organization.href.split(/[/ ]+/).pop()
         try {
-          const orgRes = await fetch(
+          const orgAnimalRes = await fetch(
             `https://api.petfinder.com/v2/animals?organization=${orgId}`,
             {
               headers: {
@@ -39,22 +42,39 @@ export default function SingleDog() {
               },
             }
           )
-          const orgJson = await orgRes.json()
-          console.log(orgJson)
-          if (orgJson.animals) {
-            setOrg(orgJson)
+          const orgAnimalJson = await orgAnimalRes.json()
+          console.log(orgAnimalJson)
+          if (orgAnimalJson.animals) {
+            setOrgAnimals(orgAnimalJson)
             setLoading(false)
+            setOtherDogs(orgAnimalJson.animals.slice(0, 8))
           }
+        } catch (error) {
+          console.log(error)
+        }
+        try {
+          const orgRes = await fetch(
+            `https://api.petfinder.com/v2/organizations/${orgId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          )
+          const orgJson = await orgRes.json()
+          setOrg(orgJson.organization)
         } catch (error) {
           console.log(error)
         }
       }
     }
     if (router.isReady) fetchData()
+    if (orgAnimals) console.log(otherDogs)
   }, [accessToken, id, router.isReady])
 
   if (loading) return <h1>Loading...</h1>
-  if (!loading && results)
+
+  if (!loading && results && org && orgAnimals)
     return (
       <>
         {results.photos.length === 0 ? (
@@ -63,6 +83,8 @@ export default function SingleDog() {
           <SingleDogImages results={results} />
         )}
         <MainContent results={results} />
+        <OtherDogsSection results={results} otherDogs={otherDogs} org={org} />
+        <button onClick={() => console.log(org)}>Org</button>
       </>
     )
 }
@@ -223,7 +245,7 @@ const PurpleCard = (props: any) => {
       <Button
         color="text-violet-700 hover:text-white"
         className="hover:bg-violet-900"
-        onClick={() => console.log('egg')}
+        onClick={() => alert(`We're still working on this feature`)}
       >
         Start Your Inquiry
       </Button>
@@ -231,7 +253,7 @@ const PurpleCard = (props: any) => {
         color="text-white"
         bg="bg-transparent hover:bg-violet-900"
         className="border-white border-2 hover:border-violet-700"
-        onClick={() => console.log('egg')}
+        onClick={() => alert(`We're still working on this feature`)}
       >
         Read FAQs
       </Button>
@@ -240,7 +262,7 @@ const PurpleCard = (props: any) => {
           bg="bg-violet-700 hover:bg-violet-900"
           className="w-100"
           color="text-white"
-          onClick={() => console.log('egg')}
+          onClick={() => alert(`We're still working on this feature`)}
         >
           Sponsor
         </Button>
@@ -248,7 +270,7 @@ const PurpleCard = (props: any) => {
           bg="bg-violet-700 hover:bg-violet-900"
           className="w-100"
           color="text-white"
-          onClick={() => console.log('egg')}
+          onClick={() => alert(`We're still working on this feature`)}
         >
           Favourite
         </Button>
@@ -313,5 +335,38 @@ const RescuerCard = (props: any) => {
         )}
       </div>
     </Card>
+  )
+}
+
+const OtherDogsSection = (props: any) => {
+  const router = useRouter()
+  return (
+    <section className="flex flex-col items-center justify-center text-center gap-6">
+      <Container className="text-center flex flex-col gap-3 md:gap-6">
+        <h3 className="text-4xl text-violet-700">
+          Other Pets from {props.org.name}
+        </h3>
+        <FourGrid id="otherDogs">
+          {props.otherDogs.map((dog: any, index: number) => (
+            <Card
+              key={index}
+              className="col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105"
+              onClick={() => router.push(`/animals/${dog.id}`)}
+            >
+              <div
+                className="min-h-[250px] rounded-t bg-cover bg-no-repeat bg-center flex flex-col justify-end"
+                style={{
+                  backgroundImage: `url(${dog?.primary_photo_cropped?.medium})`,
+                }}
+              >
+                <p className="w-full bg-white px-3 py-5 rounded-t-[100%] text-xl text-violet-700">
+                  {dog.name.toUpperCase()}
+                </p>
+              </div>
+            </Card>
+          ))}
+        </FourGrid>
+      </Container>
+    </section>
   )
 }
