@@ -73,7 +73,7 @@ export default function Index() {
                     <div
                       id="semi-transparent-overlay"
                       className="w-full h-full p-3 flex flex-col justify-end rounded bg-black/20 hover:bg-black/40 duration-500 ease-in-out cursor-pointer hover:scale-105"
-                      onClick={() => router.push(`/dogs/${animal.id}`)}
+                      onClick={() => router.push(`/animals/${animal.id}`)}
                     >
                       <h3
                         className={`${

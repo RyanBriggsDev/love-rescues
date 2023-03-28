@@ -19,10 +19,7 @@ type LayoutProps = {
 
 function PageSpacing(props: PageSpacingProps) {
   return (
-    <div
-      id="page-spacing"
-      className="flex w-full flex-auto flex-col gap-3 md:gap-6 lg:gap-9"
-    >
+    <div id="page-spacing" className="flex w-full flex-auto flex-col gap-9">
       {props.children}
     </div>
   )

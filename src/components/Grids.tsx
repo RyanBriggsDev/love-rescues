@@ -6,11 +6,23 @@ export function FullPageGrid(props: GridProps) {
   )
 }
 
+export function FourGrid(props: GridProps) {
+  return (
+    <div
+      className={`grid grid-cols-4 w-full ${
+        props.gap ? props.gap : 'gap-3 md:gap-3 lg:gap-6'
+      }`}
+    >
+      {props.children}
+    </div>
+  )
+}
+
 export function SixGrid(props: GridProps) {
   return (
     <div
       className={`grid grid-cols-6 w-full ${
-        props.gap ? props.gap : 'gap-3 md:gap-3 lg:gap-6'
+        props.gap ? props.gap : 'gap-3 lg:gap-6'
       }`}
     >
       {props.children}
@@ -21,4 +33,5 @@ export function SixGrid(props: GridProps) {
 type GridProps = {
   children: any
   gap?: string
+  id?: string
 }
