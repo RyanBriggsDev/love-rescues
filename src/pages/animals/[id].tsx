@@ -9,6 +9,11 @@ import Icon from '@/components/Icon'
 import { BiMailSend, BiMapPin, BiPhone } from 'react-icons/bi'
 import Image from 'next/image'
 import rescueCoLogo from '../../assets/images/rescueCoLogo.png'
+import {
+  LoadingOtherPets,
+  LoadingImages,
+  LoadingMainContent,
+} from '@/components/Loading'
 
 export default function SingleDog() {
   const router = useRouter()
@@ -29,7 +34,6 @@ export default function SingleDog() {
         },
       })
       const json = await res.json()
-      console.log(json)
       if (json.animal) {
         setResults(json.animal)
         const orgId = json.animal._links.organization.href.split(/[/ ]+/).pop()
@@ -43,10 +47,8 @@ export default function SingleDog() {
             }
           )
           const orgAnimalJson = await orgAnimalRes.json()
-          console.log(orgAnimalJson)
           if (orgAnimalJson.animals) {
             setOrgAnimals(orgAnimalJson)
-            setLoading(false)
             setOtherDogs(orgAnimalJson.animals.slice(0, 8))
           }
         } catch (error) {
@@ -62,31 +64,41 @@ export default function SingleDog() {
             }
           )
           const orgJson = await orgRes.json()
-          setOrg(orgJson.organization)
+          if (orgJson.organization) {
+            setOrg(orgJson.organization)
+            setLoading(false)
+          }
         } catch (error) {
           console.log(error)
         }
       }
     }
     if (router.isReady) fetchData()
-    if (orgAnimals) console.log(otherDogs)
   }, [accessToken, id, router.isReady])
 
-  if (loading) return <h1>Loading...</h1>
-
-  if (!loading && results && org && orgAnimals)
-    return (
-      <>
-        {results.photos.length === 0 ? (
-          <p>No photos</p>
-        ) : (
-          <SingleDogImages results={results} />
-        )}
-        <MainContent results={results} />
-        <OtherDogsSection results={results} otherDogs={otherDogs} org={org} />
-        <button onClick={() => console.log(org)}>Org</button>
-      </>
-    )
+  // if (results && org && orgAnimals)
+  return (
+    <>
+      {loading ? (
+        <LoadingImages />
+      ) : results.photos.length === 0 ? (
+        <p>No photos</p>
+      ) : (
+        <SingleDogImages results={results} />
+      )}
+      {loading ? (
+        <LoadingMainContent />
+      ) : (
+        <MainContent results={results} loading={loading} />
+      )}
+      <OtherDogsSection
+        results={results}
+        otherDogs={otherDogs}
+        org={org}
+        loading={loading}
+      />
+    </>
+  )
 }
 
 const SingleDogImages = (props: any) => {
@@ -342,29 +354,37 @@ const OtherDogsSection = (props: any) => {
   const router = useRouter()
   return (
     <section className="flex flex-col items-center justify-center text-center gap-6">
-      <Container className="text-center flex flex-col gap-3 md:gap-6">
-        <h3 className="text-4xl text-violet-700">
-          Other Pets from {props.org.name}
-        </h3>
+      <Container className="text-center items-center flex flex-col gap-3 md:gap-6">
+        {props.loading ? (
+          <div className="bg-gray-200 rounded-xl w-2/3 h-[40px]"></div>
+        ) : (
+          <h3 className="text-4xl text-violet-700">
+            Other Pets from {props.org.name}
+          </h3>
+        )}
         <FourGrid id="otherDogs">
-          {props.otherDogs.map((dog: any, index: number) => (
-            <Card
-              key={index}
-              className="col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105"
-              onClick={() => router.push(`/animals/${dog.id}`)}
-            >
-              <div
-                className="min-h-[250px] rounded-t bg-cover bg-no-repeat bg-center flex flex-col justify-end"
-                style={{
-                  backgroundImage: `url(${dog?.primary_photo_cropped?.medium})`,
-                }}
+          {props.loading ? (
+            <LoadingOtherPets />
+          ) : (
+            props.otherDogs.map((dog: any, index: number) => (
+              <Card
+                key={index}
+                className="col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105"
+                onClick={() => router.push(`/animals/${dog.id}`)}
               >
-                <p className="w-full bg-white px-3 py-5 rounded-t-[100%] text-xl text-violet-700">
-                  {dog.name.toUpperCase()}
-                </p>
-              </div>
-            </Card>
-          ))}
+                <div
+                  className="min-h-[250px] rounded-t bg-cover bg-no-repeat bg-center flex flex-col justify-end"
+                  style={{
+                    backgroundImage: `url(${dog?.primary_photo_cropped?.medium})`,
+                  }}
+                >
+                  <p className="w-full bg-white px-3 py-5 rounded-t-[100%] text-xl text-violet-700">
+                    {dog.name.toUpperCase()}
+                  </p>
+                </div>
+              </Card>
+            ))
+          )}
         </FourGrid>
       </Container>
     </section>
