@@ -1,4 +1,6 @@
 import { ReactElement } from 'react'
+import Footer from '../components/Footer'
+import Nav from './Nav'
 
 export default function Layout(props: LayoutProps) {
   return (
@@ -6,9 +8,9 @@ export default function Layout(props: LayoutProps) {
       id="layout"
       className="flex min-h-screen flex-col items-center justify-between  bg-gray-100 font-poppins"
     >
-      <nav>nav</nav>
+      <Nav />
       <PageSpacing>{props.children}</PageSpacing>
-      <footer>footer</footer>
+      <Footer />
     </div>
   )
 }
