@@ -66,7 +66,7 @@ export default function SingleDog() {
           const orgJson = await orgRes.json()
           if (orgJson.organization) {
             setOrg(orgJson.organization)
-            setLoading(false)
+            // setLoading(false)
           }
         } catch (error) {
           console.log(error)

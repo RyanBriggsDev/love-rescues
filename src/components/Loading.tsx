@@ -8,7 +8,7 @@ import Image from 'next/image'
 export function LoadingOtherPets() {
   return (
     <>
-      <Card className="col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
+      <Card className="animate-pulse col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
         <div
           className="min-h-[250px] rounded-t bg-contain bg-no-repeat bg-center flex flex-col justify-end bg-gray-300"
           style={{
@@ -20,7 +20,7 @@ export function LoadingOtherPets() {
           </div>
         </div>
       </Card>
-      <Card className="col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
+      <Card className="animate-pulse col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
         <div
           className="min-h-[250px] rounded-t bg-contain bg-no-repeat bg-center flex flex-col justify-end bg-gray-300"
           style={{
@@ -32,7 +32,7 @@ export function LoadingOtherPets() {
           </div>
         </div>
       </Card>
-      <Card className="col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
+      <Card className="animate-pulse col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
         <div
           className="min-h-[250px] rounded-t bg-contain bg-no-repeat bg-center flex flex-col justify-end bg-gray-300"
           style={{
@@ -44,7 +44,7 @@ export function LoadingOtherPets() {
           </div>
         </div>
       </Card>
-      <Card className="col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
+      <Card className="animate-pulse col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
         <div
           className="min-h-[250px] rounded-t bg-contain bg-no-repeat bg-center flex flex-col justify-end bg-gray-300"
           style={{
@@ -56,7 +56,7 @@ export function LoadingOtherPets() {
           </div>
         </div>
       </Card>
-      <Card className="col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
+      <Card className="animate-pulse col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
         <div
           className="min-h-[250px] rounded-t bg-contain bg-no-repeat bg-center flex flex-col justify-end bg-gray-300"
           style={{
@@ -68,7 +68,7 @@ export function LoadingOtherPets() {
           </div>
         </div>
       </Card>
-      <Card className="col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
+      <Card className="animate-pulse col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
         <div
           className="min-h-[250px] rounded-t bg-contain bg-no-repeat bg-center flex flex-col justify-end bg-gray-300"
           style={{
@@ -80,7 +80,7 @@ export function LoadingOtherPets() {
           </div>
         </div>
       </Card>
-      <Card className="col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
+      <Card className="animate-pulse col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
         <div
           className="min-h-[250px] rounded-t bg-contain bg-no-repeat bg-center flex flex-col justify-end bg-gray-300"
           style={{
@@ -92,7 +92,7 @@ export function LoadingOtherPets() {
           </div>
         </div>
       </Card>
-      <Card className="col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
+      <Card className="animate-pulse col-span-4 sm:col-span-2 lg:col-span-1 justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 bg-gray-300">
         <div
           className="min-h-[250px] rounded-t bg-contain bg-no-repeat bg-center flex flex-col justify-end bg-gray-300"
           style={{
@@ -110,7 +110,7 @@ export function LoadingOtherPets() {
 
 export function LoadingImages() {
   return (
-    <div className="w-full grid grid-cols-3 gap-1">
+    <div className="animate-pulse w-full grid grid-cols-3 gap-1">
       <div
         className="bg-contain bg-gray-300 rounded bg-no-repeat bg-center w-100 min-h-[300px] sm:min-h-[500px]"
         style={{
@@ -135,7 +135,7 @@ export function LoadingImages() {
 
 export function LoadingMainContent() {
   return (
-    <div className="flex items-center justify-center">
+    <div className="animate-pulse flex items-center justify-center">
       <Container>
         <SixGrid gap="gap-6">
           <LoadingDogInfo />
