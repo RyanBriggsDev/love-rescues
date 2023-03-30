@@ -6,13 +6,15 @@ import Button from './Button'
 
 export default function Footer() {
   return (
-    <footer className="bg-violet-700 flex items-center justify-center w-full text-white">
-      <Container>
+    <footer className="bg-violet-700 flex flex-col items-center justify-center w-full text-white">
+      <Container className="flex flex-col gap-6">
         <SixGrid>
           <FooterLinks />
           <SignUpButton />
         </SixGrid>
+        <AuxContent />
       </Container>
+      <BottomFooter />
     </footer>
   )
 }
@@ -36,6 +38,7 @@ function FooterLinksCol(props: any) {
         <Link
           className="text-xs hover:text-violet-300 hover:scale-105 hover:underline ease-in-out duration-300"
           href={`/${item.link}`}
+          key={index}
         >
           {item.text}
         </Link>
@@ -46,7 +49,7 @@ function FooterLinksCol(props: any) {
 
 function SignUpButton() {
   return (
-    <Card className="p-3 flex flex-col gap-3 justify-center items-center  col-span-6 md:col-span-1">
+    <Card className="px-3 my-6 md:my-0 py-6 md:py-3 flex flex-col gap-3 justify-center items-center  col-span-6 md:col-span-1">
       <p className="text-black text-xs text-center">
         To get the lastest on pet adoption and pet care, sign up for the
         Petfinder newsletter.
@@ -120,3 +123,43 @@ const aboutCatsLinks = [
     ],
   },
 ]
+
+function AuxContent() {
+  const auxArr = [
+    { text: 'Shelter & Rescue Registration', link: 'coming-soon' },
+    { text: 'Stextap', link: 'coming-soon' },
+    { text: 'Terms of Service', link: 'coming-soon' },
+    { text: 'Notice at Collection', link: 'coming-soon' },
+    { text: 'Privacy Policy (updated)', link: 'coming-soon' },
+    { text: 'About Our Ads', link: 'coming-soon' },
+    {
+      text: 'Do Not Sell Or Share My Personal Information',
+      link: 'coming-soon',
+    },
+  ]
+
+  return (
+    <div className="col-span-6 w-full">
+      <ul className="flex flex-wrap justify-center items-center gap-3 text-xs">
+        {auxArr.map((item: any, index: number) => (
+          <li
+            className="hover:text-violet-300 hover:scale-105 hover:underline ease-in-out duration-300 text-center"
+            key={index}
+          >
+            <Link href={`/${item.link}`}>{item.text}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function BottomFooter() {
+  return (
+    <div className="bg-violet-900 w-full flex items-center justify-center text-center">
+      <Container>
+        <p>©2023 RyanBriggsDev</p>
+      </Container>
+    </div>
+  )
+}
