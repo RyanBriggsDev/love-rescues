@@ -4,7 +4,7 @@ export default function Card(props: CardProps) {
       id="card"
       className={`w-full rounded shadow 
       ${props.className ? props.className : ''}
-      ${props.bg ? props.bg : 'bg-white'}
+      ${props.bg ? props.bg : 'bg-whit'}
       ${props.onClick ? 'cursor-pointer' : ''}
       `}
       style={props.style}

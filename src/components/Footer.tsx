@@ -2,6 +2,7 @@ import Container from './Container'
 import { SixGrid } from './Grids'
 import Link from 'next/link'
 import Card from './Card'
+import Button from './Button'
 
 export default function Footer() {
   return (
@@ -9,6 +10,7 @@ export default function Footer() {
       <Container>
         <SixGrid>
           <FooterLinks />
+          <SignUpButton />
         </SixGrid>
       </Container>
     </footer>
@@ -29,10 +31,10 @@ function FooterLinks() {
 function FooterLinksCol(props: any) {
   return (
     <div className="flex flex-col gap-1 justify items-center sm:items-start">
-      <h3 className="text-lg">{props.data.title.toUpperCase()}</h3>
+      <h3 className="text-md">{props.data.title.toUpperCase()}</h3>
       {props.data.items.map((item: any, index: number) => (
         <Link
-          className="text-sm hover:text-violet-300 hover:scale-105 hover:underline ease-in-out duration-300"
+          className="text-xs hover:text-violet-300 hover:scale-105 hover:underline ease-in-out duration-300"
           href={`/${item.link}`}
         >
           {item.text}
@@ -43,7 +45,21 @@ function FooterLinksCol(props: any) {
 }
 
 function SignUpButton() {
-  return <Card>egg</Card>
+  return (
+    <Card className="p-3 flex flex-col gap-3 justify-center items-center  col-span-6 md:col-span-1">
+      <p className="text-black text-xs text-center">
+        To get the lastest on pet adoption and pet care, sign up for the
+        Petfinder newsletter.
+      </p>
+      <Button
+        bg="bg-violet-700 hover:bg-violet-900"
+        className="text-white w-full duration-300 ease-in-out"
+        onClick={() => alert("We're still working on this feature")}
+      >
+        Sign Up
+      </Button>
+    </Card>
+  )
 }
 
 const resourcesLinks = [
