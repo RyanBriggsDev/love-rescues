@@ -17,6 +17,7 @@ export default function AdoptionArticles() {
 }
 
 export function DogArticleCard() {
+  const router = useRouter()
   return (
     <Card className="flex flex-col relative gap-10">
       <Image
