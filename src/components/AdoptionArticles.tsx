@@ -3,6 +3,7 @@ import Card from './Card'
 import dog from '../assets/images/dog.jpg'
 import cat from '../assets/images/cat.jpg'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 export default function AdoptionArticles() {
   return (
@@ -35,7 +36,10 @@ export function DogArticleCard() {
           Learn more about caring for your new dog.
         </p>
       </div>
-      <button className="text-white bg-violet-700 p-3 w-full hover:bg-violet-900 rounded-b duration-300 ease-in-out">
+      <button
+        className="text-white bg-violet-700 p-3 w-full hover:bg-violet-900 rounded-b duration-300 ease-in-out"
+        onClick={() => router.push('/coming-soon')}
+      >
         READ MORE
       </button>
     </Card>
@@ -43,6 +47,7 @@ export function DogArticleCard() {
 }
 
 export function CatArticleCard() {
+  const router = useRouter()
   return (
     <Card className="flex flex-col relative gap-10">
       <Image
@@ -63,7 +68,10 @@ export function CatArticleCard() {
           Helpful insights on what to expect.
         </p>
       </div>
-      <button className="text-white bg-violet-700 p-3 w-full hover:bg-violet-900 rounded-b duration-300 ease-in-out">
+      <button
+        className="text-white bg-violet-700 p-3 w-full hover:bg-violet-900 rounded-b duration-300 ease-in-out"
+        onClick={() => router.push('/coming-soon')}
+      >
         READ MORE
       </button>
     </Card>
