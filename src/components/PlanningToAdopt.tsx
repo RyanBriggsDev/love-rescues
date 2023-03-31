@@ -41,7 +41,7 @@ export default function PlanningToAdopt() {
           <div className="flex flex-col justify-center items-center gap-4">
             <h4 className="text-xl text-blue-800">Pet Adoption FAQs</h4>
             <p className="text-sm text-gray-500">
-              Get answers to questions you haven't thought of.
+              {`Get answers to questions you haven't thought of.`}
             </p>
             <button
               className="py-2 px-4 border text-blue-800 hover:bg-blue-800 hover:text-white ease-in-out duration-300 border-blue-800 rounded-2xl"
