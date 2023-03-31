@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from 'react'
 import { AuthContext } from './_app'
 import { HeroSection, HomeAllPets } from '@/components/Home'
 import { useRouter } from 'next/router'
+import PlanningToAdopt from '@/components/PlanningToAdopt'
 
 export default function Index() {
   const router = useRouter()
@@ -34,6 +35,7 @@ export default function Index() {
       <>
         <HeroSection />
         <HomeAllPets data={results} />
+        <PlanningToAdopt />
       </>
     )
   }
