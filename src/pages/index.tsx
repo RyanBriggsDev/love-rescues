@@ -1,46 +1,44 @@
 // @ts-nocheck
 import { useEffect, useState, useContext } from 'react'
 import { AuthContext } from './_app'
-import dogPlaceholder from '../assets/images/dogPlaceholder.jpg'
-import { FullPageGrid } from '@/components/Grids'
-import Container from '@/components/Container'
-import { HeroSection, Introduction } from '@/components/Home'
-import Card from '@/components/Card'
+import { HeroSection, HomeAllPets } from '@/components/Home'
 import { useRouter } from 'next/router'
 
 export default function Index() {
   const router = useRouter()
-  return (
-    <>
-      <HeroSection />
-    </>
-  )
+  const [results, setResults] = useState<any>()
+  const [loading, setLoading] = useState(true)
+  const accessToken = useContext(AuthContext)
+  useEffect(() => {
+    if (accessToken === null) return
+    const fetchData = async () => {
+      const res = await fetch('https://api.petfinder.com/v2/animals?type=dog', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      const json = await res.json()
+      console.log(json)
+      if (json.animals) {
+        setLoading(false)
+        setResults(json)
+      }
+    }
+    fetchData()
+  }, [accessToken])
+
+  if (loading) return <h1 className="text-red-500">Loading...</h1>
+
+  if (!loading && results.animals) {
+    return (
+      <>
+        <HeroSection />
+        <HomeAllPets data={results} />
+      </>
+    )
+  }
 }
 
-// const [results, setResults] = useState<any>()
-// const [loading, setLoading] = useState(true)
-// const accessToken = useContext(AuthContext)
-// useEffect(() => {
-//   if (accessToken === null) return
-//   const fetchData = async () => {
-//     const res = await fetch('https://api.petfinder.com/v2/animals?type=dog', {
-//       headers: {
-//         Authorization: `Bearer ${accessToken}`,
-//       },
-//     })
-//     const json = await res.json()
-//     console.log(json)
-//     if (json.animals) {
-//       setLoading(false)
-//       setResults(json)
-//     }
-//   }
-//   fetchData()
-// }, [accessToken])
-
-//   if (loading) return <h1 className="text-red-500">Loading...</h1>
-
-//   if (!loading && results.animals)
 //     return (
 //       <>
 //         <div className="flex items-center justify-center bg-blue-300 py-28">
