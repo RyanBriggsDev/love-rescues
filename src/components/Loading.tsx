@@ -2,7 +2,7 @@ import Card from './Card'
 import paw from '../assets/images/paw.png'
 import Container from './Container'
 import { SixGrid } from './Grids'
-import Button from './Button'
+import { FaDog } from 'react-icons/fa'
 import Image from 'next/image'
 
 export function LoadingOtherPets() {
@@ -255,6 +255,36 @@ function LoadingRescuerCard() {
           <hr />
         </>
         <div id="phone" className="flex gap-3">
+          <div className="bg-gray-200 rounded-xl w-full h-[25px]"></div>
+        </div>
+      </div>
+    </Card>
+  )
+}
+
+export function LoadingHomeAllPets() {
+  return (
+    <div className="flex justify-center items-center animate-pulse">
+      <Container className="flex flex-col gap-3">
+        <h3 className="text-center text-violet-700 text-4xl">
+          Pets Available for Adoption
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+          <LoadingSingleDogCard />
+          <LoadingSingleDogCard />
+          <LoadingSingleDogCard />
+          <LoadingSingleDogCard />
+        </div>
+      </Container>
+    </div>
+  )
+}
+
+function LoadingSingleDogCard() {
+  return (
+    <Card className="justify-center text-center flex flex-col gap-3">
+      <div className="min-h-[250px] rounded-t bg-cover bg-no-repeat bg-center flex flex-col justify-end">
+        <div className="w-full bg-white px-3 py-5 rounded-t-[100%] text-xl text-violet-700">
           <div className="bg-gray-200 rounded-xl w-full h-[25px]"></div>
         </div>
       </div>
