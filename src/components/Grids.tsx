@@ -30,6 +30,18 @@ export function SixGrid(props: GridProps) {
   )
 }
 
+export function NineGrid(props: GridProps) {
+  return (
+    <div
+      className={`grid grid-cols-9 w-full ${
+        props.gap ? props.gap : 'gap-3 lg:gap-6'
+      }`}
+    >
+      {props.children}
+    </div>
+  )
+}
+
 type GridProps = {
   children: any
   gap?: string

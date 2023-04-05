@@ -2,10 +2,11 @@ import { useRouter } from 'next/router'
 import { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../_app'
 import { ReactElement } from 'react'
-import { SixGrid } from '@/components/Grids'
+import { NineGrid } from '@/components/Grids'
 import Container from '@/components/Container'
 import Card from '@/components/Card'
 import dogPlaceholder from '../../assets/images/dogPlaceholder.jpg'
+import { LoadingSingleDogCard } from '@/components/Loading'
 
 export default function Search() {
   const router = useRouter()
@@ -52,25 +53,52 @@ export default function Search() {
     }
   }, [accessToken])
 
-  if (loading) return <p>Loading</p>
-
   return (
     <div className="flex items-center justify-center">
       <Container>
-        <SixGrid>
+        <NineGrid>
           <FilterBar />
-          <MainContent results={results} />
-        </SixGrid>
+          <MainContent loading={loading} results={results} />
+        </NineGrid>
       </Container>
     </div>
   )
 }
 
 function MainContent(props: MainContentProps) {
+  const loadingElements: JSX.Element[] = []
+  for (let i = 0; i < 20; i++) {
+    loadingElements.push(<LoadingSingleDogCard key={i} />)
+  }
+
   return (
-    <div className="col-span-6 md:col-span-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
-      {props.results.animals.map((animal: any, index: number) => (
+    <div className="col-span-9 md:col-span-7 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+      {props.loading
+        ? loadingElements
+        : props.results?.animals.map((animal: any, index: number) => (
+            <AnimalCard
+              route={animal.id}
+              bgImg={
+                animal.primary_photo_cropped?.medium
+                  ? animal.primary_photo_cropped.medium
+                  : dogPlaceholder.src
+              }
+              key={index}
+            >
+              <div className="w-full bg-white px-3 py-5 rounded-b rounded-t-[100%]">
+                <p className="text-xl text-violet-700">
+                  {animal.name.toUpperCase()}
+                </p>
+                <div className="flex gap-1 flex-col justify-center text-xs rounded">
+                  <p>{`${animal.age}  |  ${animal.breeds.primary}`}</p>
+                  <p>{`${Math.round(animal.distance)} miles away`}</p>
+                </div>
+              </div>
+            </AnimalCard>
+          ))}
+      {/* {props.results?.animals.map((animal: any, index: number) => (
         <AnimalCard
+          route={animal.id}
           bgImg={
             animal.primary_photo_cropped?.medium
               ? animal.primary_photo_cropped.medium
@@ -78,20 +106,30 @@ function MainContent(props: MainContentProps) {
           }
           key={index}
         >
-          <p className="w-full bg-white px-3 py-5 rounded-t-[100%] text-xl text-violet-700">
-            {animal.name.toUpperCase()}
-          </p>
+          <div className="w-full bg-white px-3 py-5 rounded-b rounded-t-[100%]">
+            <p className="text-xl text-violet-700">
+              {animal.name.toUpperCase()}
+            </p>
+            <div className="flex gap-1 flex-col justify-center text-xs rounded">
+              <p>{`${animal.age}  |  ${animal.breeds.primary}`}</p>
+              <p>{`${Math.round(animal.distance)} miles away`}</p>
+            </div>
+          </div>
         </AnimalCard>
-      ))}
+      ))} */}
     </div>
   )
 }
 
 function AnimalCard(props: AnimalCardProps) {
+  const router = useRouter()
   return (
-    <Card className="justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105">
+    <Card
+      className="justify-center text-center flex flex-col gap-3 bg-cover duration-300 ease-in-out hover:scale-105 rounded"
+      onClick={() => router.push(`/animals/${props.route}`)}
+    >
       <div
-        className="bg-cover bg-center bg-no-repeat min-h-[250px] rounded-t flex flex-col justify-end"
+        className="bg-cover bg-center bg-no-repeat min-h-[300px] rounded flex flex-col justify-end"
         style={{ backgroundImage: `url(${props.bgImg})` }}
       >
         {props.children}
@@ -101,14 +139,16 @@ function AnimalCard(props: AnimalCardProps) {
 }
 
 function FilterBar() {
-  return <aside className="col-span-6 md:col-span-2">Filter Options</aside>
+  return <aside className="col-span-9 md:col-span-2">Filter Options</aside>
 }
 
 type MainContentProps = {
   results: any
+  loading: boolean
 }
 
 type AnimalCardProps = {
   children: ReactElement
   bgImg?: string
+  route?: 'string'
 }
