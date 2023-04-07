@@ -280,9 +280,9 @@ export function LoadingHomeAllPets() {
   )
 }
 
-function LoadingSingleDogCard() {
+export function LoadingSingleDogCard() {
   return (
-    <Card className="justify-center text-center flex flex-col gap-3">
+    <Card className="animate-pulse justify-center text-center flex flex-col gap-3">
       <div className="min-h-[250px] rounded-t bg-cover bg-no-repeat bg-center flex flex-col justify-end">
         <div className="w-full bg-white px-3 py-5 rounded-t-[100%] text-xl text-violet-700">
           <div className="bg-gray-200 rounded-xl w-full h-[25px]"></div>

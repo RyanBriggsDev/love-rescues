@@ -34,8 +34,8 @@ export function HeroSection() {
 }
 
 function SearchBar() {
-  const [searchAnimal, setSearchAnimal] = useState<string | null>(null)
-  const [searchLocation, setSearchLocation] = useState<string | null>(null)
+  const [searchAnimal, setSearchAnimal] = useState<string | null>('')
+  const [searchLocation, setSearchLocation] = useState<string | null>('')
   const router = useRouter()
 
   const handleSubmit = (e: any) => {

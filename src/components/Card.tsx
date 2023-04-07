@@ -2,7 +2,8 @@ export default function Card(props: CardProps) {
   return (
     <div
       id="card"
-      className={`w-full rounded shadow 
+      className={`rounded shadow 
+      ${props.width ? props.width : 'w-full'}
       ${props.className ? props.className : ''}
       ${props.bg ? props.bg : 'bg-white'}
       ${props.onClick ? 'cursor-pointer' : ''}
@@ -20,5 +21,6 @@ type CardProps = {
   style?: any
   className?: string
   bg?: string
+  width?: string
   onClick?: () => void
 }
