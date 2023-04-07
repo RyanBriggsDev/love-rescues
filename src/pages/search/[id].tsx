@@ -7,25 +7,26 @@ import Container from '@/components/Container'
 import Card from '@/components/Card'
 import dogPlaceholder from '../../assets/images/dogPlaceholder.jpg'
 import { LoadingSingleDogCard } from '@/components/Loading'
+import Button from '@/components/Button'
 
 export default function Search() {
   const router = useRouter()
-  const [results, setResults] = useState<any>()
-  const [loading, setLoading] = useState(true)
-  const [filterOptions, setFilterOptions] = useState({
+  const initialState = {
     breed: '',
     age: '',
     size: '',
     gender: '',
     coat: '',
     color: '',
-    'care & behavior': '',
-  })
+  }
+  const [results, setResults] = useState<any>()
+  const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(1)
+  const [filterOptions, setFilterOptions] = useState(initialState)
   const accessToken = useContext(AuthContext)
 
-  useEffect(() => {}, [filterOptions])
-
   useEffect(() => {
+    setLoading(true)
     const last = window.location.href.split('/').pop()
     if (last) {
       const words = last.toString().split('+')
@@ -67,6 +68,7 @@ export default function Search() {
           <FilterBar
             filterOptions={filterOptions}
             setFilterOptions={setFilterOptions}
+            initialState={initialState}
           />
           <MainContent loading={loading} results={results} />
         </NineGrid>
@@ -82,35 +84,37 @@ function MainContent(props: MainContentProps) {
   }
 
   return (
-    <div className="col-span-9 md:col-span-7 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div className="col-span-9 md:col-span-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
       {console.log(props.results)}
-      {props.loading
-        ? loadingElements
-        : props.results?.animals.map((animal: any, index: number) =>
-            props.results?.animals.length === 0 ? (
-              <p>No Results</p>
-            ) : (
-              <AnimalCard
-                route={animal.id}
-                bgImg={
-                  animal.primary_photo_cropped?.medium
-                    ? animal.primary_photo_cropped.medium
-                    : dogPlaceholder.src
-                }
-                key={index}
-              >
-                <div className="w-full bg-white px-3 py-5 rounded-b rounded-t-[100%]">
-                  <p className="text-xl text-violet-700">
-                    {animal.name.toUpperCase()}
-                  </p>
-                  <div className="flex gap-1 flex-col justify-center text-xs rounded">
-                    <p>{`${animal.age}  |  ${animal.breeds.primary}`}</p>
-                    <p>{`${Math.round(animal.distance)} miles away`}</p>
-                  </div>
-                </div>
-              </AnimalCard>
-            )
-          )}
+      {props.loading ? (
+        loadingElements
+      ) : props.results.animals.length === 0 ? (
+        <div className="flex items-center col-span-3 justify-center py-12 text-center font-bold">
+          <p>{`Oh no! We've got no animals matching your search results.`}</p>
+        </div>
+      ) : (
+        props.results?.animals.map((animal: any, index: number) => (
+          <AnimalCard
+            route={animal.id}
+            bgImg={
+              animal.primary_photo_cropped?.medium
+                ? animal.primary_photo_cropped.medium
+                : dogPlaceholder.src
+            }
+            key={index}
+          >
+            <div className="w-full bg-white px-3 py-5 rounded-b rounded-t-[100%]">
+              <p className="text-xl text-violet-700">
+                {animal.name.toUpperCase()}
+              </p>
+              <div className="flex gap-1 flex-col justify-center text-xs rounded">
+                <p>{`${animal.age}  |  ${animal.breeds.primary}`}</p>
+                <p>{`${Math.round(animal.distance)} miles away`}</p>
+              </div>
+            </div>
+          </AnimalCard>
+        ))
+      )}
     </div>
   )
 }
@@ -169,7 +173,7 @@ const colorOptions = [
 
 function FilterBar(props: FilterOptionsProps) {
   return (
-    <aside className="col-span-9 md:col-span-2 gap-6 flex flex-col">
+    <aside className="col-span-9 md:col-span-3 gap-6 flex flex-col">
       <h3 className="text-xl text-center">Filter Results</h3>
       <FilterOption
         options={breedOptions}
@@ -219,6 +223,13 @@ function FilterBar(props: FilterOptionsProps) {
         setFilterOptions={props.setFilterOptions}
         filterOptions={props.filterOptions}
       /> */}
+      <Button
+        bg="bg-violet-700 hover:bg-violet-900"
+        className="text-white"
+        onClick={() => props.setFilterOptions(props.initialState)}
+      >
+        Reset
+      </Button>
     </aside>
   )
 }
@@ -233,7 +244,9 @@ function FilterOption(props: FilterProps) {
 
   return (
     <div className="flex flex-col justify-center gap-1">
-      <label className="text-center">{props.label.toUpperCase()}</label>
+      <label className="text-center font-bold">
+        {props.label.toUpperCase()}
+      </label>
       <Card className="text-center text-sm selectdiv">
         <select
           className="w-full p-3 rounded"
@@ -255,6 +268,7 @@ function FilterOption(props: FilterProps) {
 type FilterOptionsProps = {
   setFilterOptions: any
   filterOptions: any
+  initialState: any
 }
 
 type FilterProps = {
