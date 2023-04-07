@@ -38,7 +38,7 @@ export default function Search() {
         try {
           // prettier-ignore
           const res = await fetch(
-            `https://api.petfinder.com/v2/animals?type=${words[0]}${words[1] ? `&location=${words[1]}` : ''}${filterOptions.breed !== '' ? `&breed=${filterOptions.breed}` : ''}${filterOptions.age !== '' ? `&age=${filterOptions.age}` : ''}${filterOptions.size !== '' ? `&size=${filterOptions.size}` : ''}${filterOptions.gender !== '' ? `&gender=${filterOptions.gender}` : ''}${filterOptions.coat !== '' ? `&coat=${filterOptions.coat}` : ''}${filterOptions.color !== '' ? `&color=${filterOptions.color.toLowerCase()}` : ''}`,
+            `https://api.petfinder.com/v2/animals?type=${words[0]}${words[1] ? `&location=${words[1]}` : ''}${filterOptions.breed !== '' ? `&breed=${filterOptions.breed}` : ''}${filterOptions.age !== '' ? `&age=${filterOptions.age}` : ''}${filterOptions.size !== '' ? `&size=${filterOptions.size}` : ''}${filterOptions.gender !== '' ? `&gender=${filterOptions.gender}` : ''}${filterOptions.coat !== '' ? `&coat=${filterOptions.coat}` : ''}${filterOptions.color !== '' ? `&color=${filterOptions.color.toLowerCase()}` : ''}${`&page=${page}`}`,
             {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -59,7 +59,7 @@ export default function Search() {
         fetchData()
       }
     }
-  }, [accessToken, filterOptions])
+  }, [accessToken, filterOptions, page])
 
   return (
     <div className="flex items-center justify-center">
@@ -70,7 +70,7 @@ export default function Search() {
             setFilterOptions={setFilterOptions}
             initialState={initialState}
           />
-          <MainContent loading={loading} results={results} />
+          <MainContent loading={loading} results={results} setPage={setPage} />
         </NineGrid>
       </Container>
     </div>
@@ -84,7 +84,7 @@ function MainContent(props: MainContentProps) {
   }
 
   return (
-    <div className="col-span-9 md:col-span-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div className="col-span-9 md:col-span-7 grid-rows-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {console.log(props.results)}
       {props.loading ? (
         loadingElements
@@ -115,6 +115,42 @@ function MainContent(props: MainContentProps) {
           </AnimalCard>
         ))
       )}
+      {props.results && (
+        <Paginator results={props.results} setPage={props.setPage} />
+      )}
+    </div>
+  )
+}
+
+function Paginator(props: PaginatorProps) {
+  return (
+    <div className="col-span-1 sm:col-span-2 lg:col-span-3 xl:col-span-4 flex items-center justify-center gap-3">
+      {props.results.pagination.current_page > 1 && (
+        <Card
+          className="px-6 py-3"
+          width="w-fit"
+          onClick={() =>
+            props.setPage(props.results.pagination.current_page - 1)
+          }
+        >
+          Previous
+        </Card>
+      )}
+      <Card className="px-6 py-3" width="w-fit">
+        <p>{`Page ${props.results.pagination.current_page} of ${props.results.pagination.total_pages}`}</p>
+      </Card>
+      {props.results.pagination.current_page <
+        props.results.pagination.total_pages && (
+        <Card
+          className="px-6 py-3"
+          width="w-fit"
+          onClick={() =>
+            props.setPage(props.results.pagination.current_page + 1)
+          }
+        >
+          Next
+        </Card>
+      )}
     </div>
   )
 }
@@ -135,7 +171,6 @@ function AnimalCard(props: AnimalCardProps) {
     </Card>
   )
 }
-
 const breedOptions = [
   'Akita',
   'American Bulldog',
@@ -145,13 +180,9 @@ const breedOptions = [
   'German Shepherd Dog',
   'Labrador Retriever',
 ]
-
 const ageOptions = ['Baby', 'Young', 'Adult', 'Senior']
-
 const sizeOptions = ['Small', 'Medium', 'Large', 'xlarge']
-
 const genderOptions = ['Male', 'Female']
-// const goodWithOptions = ['Kids', 'Other Dogs', 'Cats']
 const coatOptions = ['Hairless', 'Short', 'Medium', 'Long', 'Wire', 'Curly']
 const colorOptions = [
   'Apricot / Beige',
@@ -169,11 +200,10 @@ const colorOptions = [
   'White / Cream',
   'Yellow / Tan / Blond / Fawn',
 ]
-// const careOptions = ['House-trained', 'Special Needs']
 
 function FilterBar(props: FilterOptionsProps) {
   return (
-    <aside className="col-span-9 md:col-span-3 gap-6 flex flex-col">
+    <aside className="col-span-9 md:col-span-2 gap-6 flex flex-col">
       <h3 className="text-xl text-center">Filter Results</h3>
       <FilterOption
         options={breedOptions}
@@ -199,12 +229,6 @@ function FilterBar(props: FilterOptionsProps) {
         setFilterOptions={props.setFilterOptions}
         filterOptions={props.filterOptions}
       />
-      {/* <FilterOption
-        options={goodWithOptions}
-        label="good with"
-        setFilterOptions={props.setFilterOptions}
-        filterOptions={props.filterOptions}
-      /> */}
       <FilterOption
         options={coatOptions}
         label="coat"
@@ -217,12 +241,6 @@ function FilterBar(props: FilterOptionsProps) {
         setFilterOptions={props.setFilterOptions}
         filterOptions={props.filterOptions}
       />
-      {/* <FilterOption
-        options={careOptions}
-        label="CARE & BEHAVIOR"
-        setFilterOptions={props.setFilterOptions}
-        filterOptions={props.filterOptions}
-      /> */}
       <Button
         bg="bg-violet-700 hover:bg-violet-900"
         className="text-white"
@@ -281,10 +299,16 @@ type FilterProps = {
 type MainContentProps = {
   results: any
   loading: boolean
+  setPage: any
 }
 
 type AnimalCardProps = {
   children: ReactElement
   bgImg?: string
   route?: 'string'
+}
+
+type PaginatorProps = {
+  results: any
+  setPage: any
 }
