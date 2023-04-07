@@ -19,3 +19,33 @@
 .font-poppins {
   font-family: poppins;
 }
+
+.selectdiv {
+  position: relative;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+.selectdiv:after {
+  content: '<>';
+  font: 20px;
+  color: #333;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  right: 15px;
+  top: 18px;
+
+  position: absolute;
+  pointer-events: none;
+}
+
+.selectdiv select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 5px 0px;
+}
